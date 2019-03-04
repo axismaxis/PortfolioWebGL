@@ -1,0 +1,41 @@
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="style.css">
+	<title>WebGL</title>
+</head>
+<body>
+	<script id="vertex-shader" type="vertex-shader">
+		attribute vec2 a_position;
+
+		uniform vec2 u_resolution;
+
+		void main(){
+			//Convert from position to 0.0 to 1.0
+			vec2 zeroToOne = a_position / u_resolution;
+
+			//Convert from 0->1 to 0->2
+			vec2 zeroToTwo = zeroToOne * 2.0;
+
+			// Convert from 0->2 to -1->1(clipspace)
+			vec2 clipSpace = zeroToTwo - 1.0;
+
+			gl_Position = vec4(clipSpace * vec2(1, -1), 0, 1);
+		}
+	</script>
+
+	<script id="fragment-shader" type="fragment-shader">
+		precision mediump float;
+
+		void main(){
+			gl_FragColor = vec4(1, 0, 0.5, 1);
+		}
+	</script>
+
+	<script src="gl-matrix-min.js"></script>
+	<script src="glUtil.js"></script>
+	<script src="WebGLFundamentals.js"></script>
+</body>
+</html>
